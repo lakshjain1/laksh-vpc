@@ -9,7 +9,6 @@ pipeline {
                     sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
                     sudo yum -y install terraform
                     ls -ltr
-                    cd laksh-vpc
                     terraform init
                 '''
             }
