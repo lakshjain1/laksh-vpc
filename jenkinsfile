@@ -1,0 +1,41 @@
+pipeline {
+    agent { node {label 'Agent-1'} }
+
+    stages {
+        stage('init') {
+            steps {
+                sh '''
+                    sudo yum install -y yum-utils
+                    sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+                    sudo yum -y install terraform
+                    cd laksh-vpc
+                    terraform init
+                '''
+            }
+        }
+        stage('plan') {
+            steps {
+                sh '''
+                    terraform plan
+                '''
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+    }
+
+    post { 
+        always { 
+            echo 'I will always say Hello again!'
+        }
+        success {
+            echo 'this is success'
+        }
+        failure {
+            echo 'this is fail'
+        }
+    }
+}
