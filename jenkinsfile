@@ -4,7 +4,7 @@ pipeline {
     options {
         ansiColor('xterm')
     }
-    
+
     stages {
         stage('init') {
             steps {
@@ -24,11 +24,17 @@ pipeline {
                 '''
             }
         }
-        stage('Deploy') {
+        stage('Approve') {
             steps {
-                echo 'Deploying....'
+                input "shall we apply"
             }
         }
+        stage('apply') {
+            steps {
+                sh 'terraform apply -auto-approve'
+            }
+        }
+    }
     }
 
     post { 
